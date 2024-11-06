@@ -1,0 +1,16 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t rizkymiff77/kirito:latest .
+    - docker push rizkymiff77/kirito:latest
+
+deploy:
+  stage: deploy
+  script:
+    - kubectl apply -f kirito-deployment.yaml --kubeconfig kubeconfig
+  only:
+    - main
